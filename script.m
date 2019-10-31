@@ -2,8 +2,8 @@ close all; clc; clear all;
 
 Nx = 1001; % Number of nodes to solve BVPs and homogenized/heterogeneous models
 
-paper_formatting = true;
-% paper_formatting = false;
+% paper_formatting = true;
+paper_formatting = false;
 
 font_size = 34;
 if paper_formatting
