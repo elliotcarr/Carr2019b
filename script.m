@@ -2,12 +2,12 @@ close all; clc; clear all;
 
 Nx = 1001; % Number of nodes to solve BVPs and homogenized/heterogeneous models
 
-% paper_formatting = true;
-paper_formatting = false;
+paper_formatting = true;
+% paper_formatting = false;
 
 font_size = 34;
 if paper_formatting
-    path_name = '../../Paper/Figures/';
+    path_name = '../../Revised Paper/Figures/';
     addpath('../export_fig-master')
 end
 
@@ -21,12 +21,15 @@ tspan = [1e-2,1e-1,1e0]; % Plot solution at these times
 Nt = 100; terror = linspace(0,1,Nt+1); terror(1) = []; % Calculate error based on these times
 
 % Test cases from Carr (2019)
-% run('./Test Cases/CaseA');
-run('./Test Cases/CaseB');
+run('./Test Cases/CaseA');
+% run('./Test Cases/CaseB');
 % run('./Test Cases/CaseC');
 % run('./Test Cases/CaseD');
 % run('./Test Cases/CaseE');
 % run('./Test Cases/CaseF');
+% run('./Test Cases/CaseG');
+% run('./Test Cases/CaseH');
+% run('./Test Cases/CaseI');
 
 %% Finite volume geometrical properties
 [x,h,xw,xe] = mesh_properties(L,Nx);
@@ -35,7 +38,7 @@ run('./Test Cases/CaseB');
 if paper_formatting
     figure;
     set(gcf,'Color','w')    
-    if strcmp(CaseNum,'E')
+    if strcmp(CaseNum,'H')
         for i = 2:length(Dvec)-1
             plot([(i-2)/16,(i-1)/16],[Dvec(i),Dvec(i)],'LineWidth',2,'Color',[0,0.447,0.741])
             hold on            
@@ -138,6 +141,10 @@ epsilon = epsilon/(Nx*Nt);
 epsilon_tilde = epsilon_tilde/(Nx*Nt);
 
 if paper_formatting
-    fprintf('\\num{%1.3f} & \\num{%1.3f} & \\num{%1.2e} & \\num{%1.3f} & \\num{%1.2e}\n',...
-        Deff,veff,epsilon,Deff_tilde,epsilon_tilde)
+    fprintf('%s & \\num{%1.3f} & \\num{%1.3f} & \\num{%1.2e} & \\num{%1.3f} & \\num{%1.2e}\n',...
+        CaseNum,Deff,veff,epsilon,Deff_tilde,epsilon_tilde)
+    if ismember(CaseNum,{'D','E','F'})
+        fprintf('\\revisiontable{%s} & \\revisiontable{\\num{%1.3f}} & \\revisiontable{\\num{%1.3f}} & \\revisiontable{\\num{%1.2e}} & \\revisiontable{\\num{%1.3f}} & \\revisiontable{\\num{%1.2e}}\n',...
+            CaseNum,Deff,veff,epsilon,Deff_tilde,epsilon_tilde)
+    end
 end
